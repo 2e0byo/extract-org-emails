@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "extract-org-emails"
+name = "manage-org-classes"
 version = "0.1.0"
-description = "Extract emails from org files I use."
+description = "Perform management tasks for classes I teach"
 authors = ["John Maximilian <2e0byo@gmail.com>"]
 license = "MIT"
 
@@ -13,7 +13,7 @@ orgparse = "^0.3.0"
 [tool.poetry.dev-dependencies]
 
 [tool.poetry.scripts]
-extract-org-emails = "extract_org_emails:main"
+manage-org-classes = "manage_org_classes:cli"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
