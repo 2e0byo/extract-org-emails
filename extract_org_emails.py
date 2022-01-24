@@ -5,6 +5,7 @@ from typing import Iterable, Optional
 import click
 from orgparse import load
 from orgparse.extra import Table
+from orgparse.node import OrgNode
 
 
 def find_module(root, title: str, subheading: str = None):
@@ -28,13 +29,13 @@ def extract_emails(table: Table) -> Iterable[str]:
     return (row[email_col].strip() for row in others if "@" in row[email_col])
 
 
+def make_table(section: OrgNode):
+    return Table(section.body.strip().splitlines())
+
+
 def process_module(root, title: str, subheading: str) -> Iterable[str]:
     mod = find_module(root, title, subheading)
-    tables = (
-        Table(x.body.strip().splitlines())
-        for x in mod[1:]
-        if x.heading.lower() == "students"
-    )
+    tables = (make_table(x) for x in mod[1:] if x.heading.lower() == "students")
     return chain.from_iterable(extract_emails(t) for t in tables)
 
 
