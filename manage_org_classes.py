@@ -65,7 +65,7 @@ def get_slackers(register: Table, skip: int, thresh: int = 2):
     seminars = get_seminars(first)
     return (
         row | dict(Missed=missed, Emailed=has_emailed(row["Email"]))
-        for row in chain((first,), dicts)
+        for row in dicts
         if not row[seminars[-1]].strip()
         if (missed := get_missed(row, seminars, skip)) >= thresh
     )
