@@ -122,10 +122,9 @@ def emails():
 
 @cli.command()
 @click.argument("skip")
-@click.option("--thresh", help="Threshold.")
+@click.option("--thresh", help="Threshold.", default="2")
 @click.option("--bcc/--no-bcc", help="Generate bcc", default=False)
-def slackers(skip: str, thresh: str = "2", bcc: bool = None):
-    thresh = thresh or 0
+def slackers(skip: str, thresh: str, bcc: bool = None):
     module = find_module(common["root"], common["module"], common["subheading"])
     slackers = get_all_slackers(module, int(skip), int(thresh))
     if not bcc:
