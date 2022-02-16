@@ -97,7 +97,9 @@ def format_table(rows: list[dict], keys: list = None):
         "|" + "|".join(f" {k:<{widths[k]}} " for k in keys) + "|",
         "|" + "|".join("-" * (widths[k] + 2) for k in keys) + "|",
     ]
-    lines = ["|" + "|".join(f" {r[k]:<{widths[k]}} " for k in keys) + "|" for r in rows]
+    lines = [
+        "|" + "|".join(f" {str(r[k]):<{widths[k]}} " for k in keys) + "|" for r in rows
+    ]
     return "\n".join(chain(header, lines))
 
 
