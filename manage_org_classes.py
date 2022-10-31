@@ -1,3 +1,4 @@
+from datetime import datetime
 from itertools import chain
 from pathlib import Path
 from subprocess import run
@@ -48,15 +49,16 @@ def get_seminars(row: dict):
     seminars = []
     for k in row.keys():
         try:
-            int(k)
+            datetime.strptime(k, "%Y-%m-%d")
             seminars.append(k)
         except (TypeError, ValueError):
             pass
-    return seminars
+    return sorted(seminars)
 
 
 def get_missed(row: dict, seminars: list, skip: int):
-    return len([1 for k in seminars if not row[k].strip() and int(k) > skip])
+    first_interesting = seminars[skip]
+    return sum(1 for d in seminars if not row[d].strip() and d >= first_interesting)
 
 
 def get_slackers(register: Table, skip: int, thresh: int = 2):
